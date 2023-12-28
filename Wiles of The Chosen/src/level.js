@@ -6,7 +6,8 @@ const level = () =>{
     
 
     k.setGravity(GRAVITY_AMOUNT);
-    k.loadSprite("bgImage", "./src/Assests/testbackground.png");
+    k.loadSprite("bgImage", "./src/Assets/testbackground.png");
+    k.loadSprite("tiles", "./src/Assets/Tile_01.png");
 
 
 

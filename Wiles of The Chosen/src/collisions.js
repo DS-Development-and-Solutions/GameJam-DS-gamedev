@@ -77,16 +77,16 @@ const collisions = () => {
     
     spawnMobs();
     
-    ui = k.add([k.layer("ui")]);
+    // ui = k.add([k.layer("ui")]);
 
-    ui.on("draw", () => {
-        drawText({
-          text: "HP: " + player_entity.hp(),
-          size: 14,
-          font: "sink",
-          pos: vec2(8, 24),
-        });
-      });
+    // ui.on("draw", () => {
+    //     drawText({
+    //       text: "HP: " + player_entity.hp(),
+    //       size: 14,
+    //       font: "sink",
+    //       pos: vec2(8, 24),
+    //     });
+    //   });
 
     player_entity.onCollide("badmob_1", () => {
         player_entity.hurt(10)
