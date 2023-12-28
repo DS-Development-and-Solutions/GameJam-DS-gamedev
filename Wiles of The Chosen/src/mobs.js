@@ -1,11 +1,12 @@
 import k from "./kaboom.js";
+import player from "./player.js";
 
 function mobs() {
 const MOBSPEED = 30;
 const FLOOR_HEIGHT= 48;
 
-k.loadSprite("badmob_1", ".src/Assets/badmob.png");
-k.loadSprite("goodmob_1", ".src/Assets/goodmob.png")
+k.loadSprite("badmob_1", "./src/Assets/badmob.png");
+k.loadSprite("goodmob_1", "./src/Assets/goodmob.png")
 
 
 
@@ -20,12 +21,15 @@ function spawnMobs (){
         "badmob_1",
     ])
 
-    k.wait(rand(0.5, 1.5), spawnMobs)
+    k.wait(rand(0.5, 5), spawnMobs)
 }
 
 spawnMobs();
 
-}
+player().onCollide("badmob_1", () => {
+    k.destroy(player);
+});
 
+}
 
 export default mobs;
