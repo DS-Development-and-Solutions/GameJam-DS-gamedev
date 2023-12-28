@@ -1,9 +1,12 @@
 import k from "./kaboom.js";
 
 const level = () =>{
-    const GRAVITY_AMOUNT = 1000
+    const GRAVITY_AMOUNT = 1000;
+    const FLOOR_HEIGHT = 48;    
+    
+
     k.setGravity(GRAVITY_AMOUNT);
-    k.loadSprite("bgImage", "./src/Assests/testbackground.png");
+    k.loadSprite("bgImage", "./src/Assets/testbackground.png");
 
 
 

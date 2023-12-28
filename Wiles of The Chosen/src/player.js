@@ -5,8 +5,8 @@ const player = () => {
     const JUMP_FORCE = 300;
     const ORB_SPEED = 500;
 
-    k.loadSprite("player", "./src/Assests/maincharacter/player.png");
-    k.loadSprite("orb", "./src/Assests/orb.png");
+    k.loadSprite("player", "./src/Assets/maincharacter/player.png");
+    k.loadSprite("orb", "./src/Assets/orb.png");
 
     const player_entity = k.add([
         k.sprite("player"),
