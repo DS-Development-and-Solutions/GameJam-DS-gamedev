@@ -24,9 +24,8 @@ const Kaboom = ({run}) => {
 const App = () => {
 
   return (
-    <div>
-      <h1 className = "ui-title">Wiles of The Chosen betatest</h1>
-      <Kaboom run={Startgame}/>
+    <div className="game-wrapper">
+      <Kaboom run={Startgame()}/>
     </div>
   );
 };
