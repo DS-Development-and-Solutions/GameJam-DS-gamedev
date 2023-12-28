@@ -4,7 +4,9 @@ import "./App.css";
 
 
 const Kaboom = ({}) => {
+  
   Startgame();
+
 };
 
 
@@ -13,7 +15,8 @@ const App = () => {
 
   return (
     <div className="game-wrapper">
-      <Kaboom />
+       <Kaboom />
+     
     </div>
   );
 };
