@@ -11,7 +11,7 @@ const player = () => {
         k.pos(20, 400),
         k.area(),
         k.body(),
-        origin: vec2(0.5, 0.5)m
+
     ]);
 
     function spawnOrb(p) {
