@@ -65,7 +65,7 @@ const collisions = () => {
         add([
             k.sprite("badmob_1"),
             area(),
-            pos(width(), height() - FLOOR_HEIGHT),
+            pos(1000, 674),
             anchor("botleft"),
             move(LEFT, MOBSPEED),
             offscreen({ destroy: true }),
@@ -88,8 +88,19 @@ const collisions = () => {
     //     });
     //   });
 
+
+    k.add([
+        k.text(player_entity.hp()),
+        k.pos(100,200),
+        k.anchor("center"),
+        k.z(50),
+        { update() { this.text = player_entity.hp() }},
+    ])
+
+
     player_entity.onCollide("badmob_1", () => {
         player_entity.hurt(10)
+        
 
     });
     

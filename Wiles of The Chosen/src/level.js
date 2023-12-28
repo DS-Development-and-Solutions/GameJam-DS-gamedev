@@ -22,7 +22,7 @@ const level = () =>{
         fixed()
       ]);
       // Scale the background to cover the screen
-      bgImage.scaleTo(2.7);
+      bgImage.scaleTo(4);
 
 // add([
 //     k.rect(width(), 48),
@@ -42,7 +42,7 @@ k.addLevel([
     "               ",
     "               ",
     "               ",
-    "====           =======          =====             ",
+    "            =======          =====         ===    ",
     "                                                  ",
     "==================================================",
   ], {
