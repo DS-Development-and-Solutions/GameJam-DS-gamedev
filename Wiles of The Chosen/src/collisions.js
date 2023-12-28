@@ -5,8 +5,10 @@ const collisions = () => {
     const JUMP_FORCE = 300;
     const ORB_SPEED = 500;
     const MOBSPEED = 30;
+    let MOB1_HP = 100;
     const FLOOR_HEIGHT= 48;
     let PLAYER_HP = 100;
+    let ORB_DMG = 25;
 
     k.loadSprite("player", "./src/Assets/maincharacter/player.png");
     k.loadSprite("orb", "./src/Assets/orb.png");
@@ -62,17 +64,25 @@ const collisions = () => {
     });
 
     function spawnMobs (){
-        add([
+         const mob1 = add([
             k.sprite("badmob_1"),
-            area(),
-            pos(1000, 674),
-            anchor("botleft"),
-            move(LEFT, MOBSPEED),
-            offscreen({ destroy: true }),
+            k.area(),
+            k.pos(1500, 674),
+            k.anchor("botleft"),
+            k.move(LEFT, MOBSPEED),
+            k.health(MOB1_HP),
             "badmob_1",
-        ])
-    
+        ]) 
+        
         k.wait(rand(0.5, 5), spawnMobs)
+        
+
+        mob1.on("death", () => {
+            k.shake(5); 
+            k.destroy(mob1);
+              
+        });
+        
     }
     
     spawnMobs();
@@ -100,15 +110,20 @@ const collisions = () => {
 
     player_entity.onCollide("badmob_1", () => {
         player_entity.hurt(10)
-        
-
     });
     
     player_entity.on("death", () => {
         k.destroy(player_entity);
-        k.shake(120);
-        
+        k.shake(120);   
     });
+
+    onCollide("orb", "badmob_1", (b, e) => {
+		
+		e.hurt(ORB_DMG);
+        destroy(b)
+		
+	})
+
 
     };
   
