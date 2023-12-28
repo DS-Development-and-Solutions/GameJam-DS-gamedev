@@ -1,59 +1,56 @@
 import k from "./kaboom.js";
 
 const player = () => {
-    
-    const SPEED = 300
-    const JUMP_FORCE = 500
-k.loadSprite("player", "./src/Assests/maincharacter/player.png",{
-	sliceX: 768,
-	sliceY: 128,
-	anims: {
-		idle: { from: 300, to: 300 },
-		run: { from: 301, to: 302 }
-	}});
-k.scene('animations', Animations)
+    const SPEED = 300;
+    const JUMP_FORCE = 500;
 
-k.start('animations')
-    // add something to screen
+    k.loadSprite("player", "./src/Assests/maincharacter/player.png");
 
+    const player_entity = k.add([
+        k.sprite("player"),
+        k.pos(20, 400),
+        k.area(),
+        k.body(),
+        origin: vec2(0.5, 0.5)m
+    ]);
 
-const player_entity = k.add([
-    sprite("player-idle"),
-    pos(20, 400),
-    area(),
-    body(),
-]);
+    function spawnOrb(p) {
+        const orb = k.add([
+            k.rect(6, 6),
+            k.pos(player_entity.pos),
+            k.origin("center"),
+            k.color(1, 1, 1),
+            k.body(),
+            "orb",
+        ]);
 
-function spawnOrb(p) {
-    add([
-        rect(12, 48),
-        area(),
-        pos(p),
-        origin("center"),
-        color(127, 127, 255),
-        outline(4),
-        move(UP, BULLET_SPEED),
-        cleanup(),
-        // strings here means a tag
-        "bullet",
-    ])
-}
+        const direction = vec2(1, 0);
+        orb.move(direction.scale(200));
 
-k.onKeyPress("space", () => {
-    if (player_entity.isGrounded()) {
-        player_entity.jump(JUMP_FORCE);
+        // Destroy the orb after 1 second
+        k.wait(1, () => {
+            k.destroy(orb);
+        });
     }
-});
 
-k.onKeyDown("right", () => {
-    player_entity.move(SPEED, 0)
-});
+    k.onKeyPress("space", () => {
+        if (player_entity.isGrounded()) {
+            player_entity.jump(JUMP_FORCE);
+        }
+    });
 
-k.onKeyDown("left", () => {
-    player_entity.move(-SPEED, 0)
-});
+    k.onKeyDown("right", () => {
+        player_entity.move(SPEED, 0);
+    });
 
+    k.onKeyDown("left", () => {
+        player_entity.move(-SPEED, 0);
+    });
 
+    k.onKeyPress("z", () => {
+        // Press 'z' to shoot an orb
+        spawnOrb(player_entity.pos);
+    });
 };
 
 export default player;
