@@ -1,8 +1,8 @@
 import k from "./kaboom.js";
 
 const level = () =>{
-    const GRAVITY_AMOUNT = 800;
-    const FLOOR_HEIGHT = 48;    
+    const GRAVITY_AMOUNT = 300;
+    // const FLOOR_HEIGHT = 48;    
     
 
     k.setGravity(GRAVITY_AMOUNT);
