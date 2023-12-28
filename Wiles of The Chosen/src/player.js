@@ -1,10 +1,12 @@
 import k from "./kaboom.js";
 
 const player = () => {
-    const SPEED = 300;
-    const JUMP_FORCE = 500;
+    const SPEED = 200;
+    const JUMP_FORCE = 300;
+    const ORB_SPEED = 500;
 
     k.loadSprite("player", "./src/Assests/maincharacter/player.png");
+    k.loadSprite("orb", "./src/Assests/orb.png");
 
     const player_entity = k.add([
         k.sprite("player"),
@@ -14,21 +16,22 @@ const player = () => {
 
     ]);
 
-    function spawnOrb(p) {
+    function spawnOrb(pos) {
         const orb = k.add([
-            k.rect(6, 6),
-            k.pos(player_entity.pos),
-            k.origin("center"),
-            k.color(1, 1, 1),
-            k.body(),
+            k.sprite("orb"),
+            k.area(),
+            k.move(RIGHT, ORB_SPEED),
+            k.offscreen({ destroy: true }),
+            k.scale(0.4),
+            k.pos(pos.x+35,pos.y+55),
+            k.anchor("botright"),
             "orb",
         ]);
 
-        const direction = vec2(1, 0);
-        orb.move(direction.scale(200));
+     
 
         // Destroy the orb after 1 second
-        k.wait(1, () => {
+        k.wait(1.1, () => {
             k.destroy(orb);
         });
     }
