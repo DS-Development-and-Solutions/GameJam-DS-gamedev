@@ -1,9 +1,10 @@
 import k from "./kaboom.js";
 
 const level = () =>{
-    const GRAVITY_AMOUNT = 1000
+    const GRAVITY_AMOUNT = 800
     k.setGravity(GRAVITY_AMOUNT);
     k.loadSprite("bgImage", "./src/Assests/testbackground.png");
+    k.loadSprite("tiles", "./src/Assests/Tile_01.png");
 
 
 
@@ -20,16 +21,47 @@ const level = () =>{
       // Scale the background to cover the screen
       bgImage.scaleTo(2.7);
 
-add([
-    k.rect(width(), 48),
-    k.pos(0, height() - 48),
-    k.outline(4),
-    k.area(),
-    k.body({ isStatic: true }),
-    k.color(127, 200, 255),
-    k.color(127, 200, 255),
-]);
+// add([
+//     k.rect(width(), 48),
+//     k.pos(0, height() - 48),
+//     k.outline(4),
+//     k.area(),
+//     k.body({ isStatic: true }),
+//     k.color(127, 200, 255),
+//     k.color(127, 200, 255),
+// ]);
+
+k.addLevel([
+    "               ",
+    "               ",
+    "               ",
+    "               ",
+    "               ",
+    "               ",
+    "               ",
+    "====           =======          =====             ",
+    "                                                  ",
+    "==================================================",
+  ], {
+    tileWidth: 31,
+    tileHeight: 75,
+    tiles : {
+        "=": () => [
+            k.sprite("tiles"),
+            k.area(),
+            k.body({isStatic: true})
+        ], 
+    },
+
+    "*": () => [
+        k.sprite("empty"), // replace "empty" with an appropriate sprite or use an empty sprite // add k.solid() to make sure it's a solid tile
+        k.area(),
+      ],
+
+  })
 
 }
+
+
 
 export default level;
