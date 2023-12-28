@@ -5,7 +5,7 @@ const player = () => {
     const JUMP_FORCE = 500;
 
     k.loadSprite("player", "./src/Assests/maincharacter/player.png");
-
+    
     const player_entity = k.add([
         k.sprite("player"),
         k.pos(20, 400),
