@@ -1,8 +1,10 @@
 import kaboom from "kaboom";
 export const k = kaboom({
-	
-	scale: 1.5,
+canvas: document.getElementsByClassName("gameloop"),
+scale: window.devicePixelRatio+0.3,
 
-})
+});
+
+
 
 export default k;

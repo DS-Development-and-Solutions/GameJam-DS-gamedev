@@ -94,7 +94,7 @@ const collisions = () => {
         k.pos(100,200),
         k.anchor("center"),
         k.z(50),
-        { update() { this.text = player_entity.hp() }},
+        ({ update() { this.text = player_entity.hp() }}),
     ])
 
 

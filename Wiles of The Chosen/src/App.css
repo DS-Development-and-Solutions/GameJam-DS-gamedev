@@ -1,4 +1,12 @@
-document.querySelector("#mycanvas"){
-    grid-area: auto;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.gameloop{
+
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+
 }
