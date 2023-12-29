@@ -17,7 +17,7 @@ const collisions = (game) => {
     k.loadSprite("badmob_1", "./src/Assets/badmob.png");
     k.loadSprite("goodmob_1", "./src/Assets/goodmob.png")
 
-     const player_entity = k.game.add([
+     const player_entity = game.add([
         k.sprite("player"),
         k.pos(20, 400),
         k.area(),
@@ -29,7 +29,7 @@ const collisions = (game) => {
 
     function spawnOrb(pos) {
         
-        const orb = k.game.add([
+        const orb = game.add([
             k.sprite("orb"),
             k.area(),
            
@@ -127,7 +127,7 @@ const collisions = (game) => {
         mob1.on("death", () => {
             k.shake(5); 
 
-            const goodmob1 = k.game.add([
+            const goodmob1 = game.add([
                 k.sprite("goodmob_1"),
                 k.area(),
                 k.pos(mob1.pos.x, mob1.pos.y),
@@ -147,7 +147,7 @@ const collisions = (game) => {
     spawnMobs();
     
 
-    k.game.add([
+    game.add([
         k.text(`HP: ${player_entity.hp()}`),
         k.pos(100,200),
         k.anchor("center"),
