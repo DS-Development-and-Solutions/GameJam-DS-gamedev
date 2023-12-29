@@ -1,4 +1,6 @@
 import k from "./kaboom.js";
+import Startgame from "./gameloop.js";
+
 
 const collisions = (game) => {
   const SPEED = 200;
@@ -16,6 +18,49 @@ const collisions = (game) => {
     k.loadSprite("orb", "./src/Assets/orb.png");
     k.loadSprite("badmob_1", "./src/Assets/badmob.png");
     k.loadSprite("goodmob_1", "./src/Assets/goodmob.png")
+
+    const clock = k.add([
+        k.text("08 AM"),
+        k.area(),
+        k.anchor("center"),
+        k.pos(100, 20),
+        {
+          hour: 8,
+          isAM: true,
+          totalTime: 120,
+          currentTime: 0,
+          update() {
+            this.currentTime += k.dt();
+            if (this.currentTime >= this.totalTime) {
+              this.currentTime = 0;
+              this.hour = 8;
+              this.isAM = !this.isAM;
+            } else {
+              const percentage = this.currentTime / this.totalTime;
+              this.hour = Math.floor(8 + percentage * 16);
+              if (this.hour >= 24) {
+                this.hour -= 24;
+              }
+            } this.text = `${this.hour.toString().padStart(2, "0")}:00 ${
+                this.isAM ? "AM" : "PM"
+              }`;
+            },
+          }, 
+
+        ]);
+        
+        const losingText = game.add([
+            k.text(""),
+            k.area(),
+            k.anchor("center"),
+            k.pos(800, 400),
+          ]);
+    
+          function endGame(losingText) {
+            losingText.text = "The town is destroyed! Press enter to restart";
+            gameOver = true;
+          }
+
 
      const player_entity = game.add([
         k.sprite("player"),
@@ -111,7 +156,6 @@ const collisions = (game) => {
             {speed: MOBSPEED},
             k.sprite("badmob_1"),
             k.area(),
-            k.body(),
             k.pos(1500, 674),
             k.anchor("botleft"),
             k.move(LEFT, MOBSPEED),
@@ -163,6 +207,7 @@ const collisions = (game) => {
     player_entity.on("death", () => {
         k.destroy(player_entity);
         k.shake(120);   
+        endGame(losingText, player_entity);
     });
 
     onCollide("orb", "badmob_1", (b, e) => {
@@ -171,12 +216,11 @@ const collisions = (game) => {
 		
 	})
 
+    let gameOver = false;
+    k.onKeyPress("enter", () => (gameOver ? Startgame() : null));
 
     };
   
 
 
 export default collisions;
-
-//finalised
-
