@@ -1,14 +1,14 @@
 import k from "./kaboom.js";
 
 const collisions = (game) => {
-    const SPEED = 200;
-    const JUMP_FORCE = 300;
-    const ORB_SPEED = 600;
-    const MOBSPEED = 30;
-    let MOB1_HP = 100;
-    const FLOOR_HEIGHT= 48;
-    let PLAYER_HP = 100;
-    let ORB_DMG = 8;
+  const SPEED = 200;
+  const JUMP_FORCE = 300;
+  const ORB_SPEED = 600;
+  const MOBSPEED = 30;
+  let MOB1_HP = 100;
+  const FLOOR_HEIGHT = 48;
+  let PLAYER_HP = 100;
+  let ORB_DMG = 8;
     let ORB_COUNT = 0;
     let KILL_COUNT = 0;
 
@@ -17,19 +17,19 @@ const collisions = (game) => {
     k.loadSprite("badmob_1", "./src/Assets/badmob.png");
     k.loadSprite("goodmob_1", "./src/Assets/goodmob.png")
 
-     const player_entity = game.add([
+     const player_entity = k.game.add([
         k.sprite("player"),
         k.pos(20, 400),
         k.area(),
         k.body(),
         k.health(PLAYER_HP),
-       
+        
         
     ]);
 
     function spawnOrb(pos) {
         
-        const orb = game.add([
+        const orb = k.game.add([
             k.sprite("orb"),
             k.area(),
            
@@ -111,7 +111,7 @@ const collisions = (game) => {
             {speed: MOBSPEED},
             k.sprite("badmob_1"),
             k.area(),
-            
+            k.body(),
             k.pos(1500, 674),
             k.anchor("botleft"),
             k.move(LEFT, MOBSPEED),
@@ -127,7 +127,7 @@ const collisions = (game) => {
         mob1.on("death", () => {
             k.shake(5); 
 
-            const goodmob1 = game.add([
+            const goodmob1 = k.game.add([
                 k.sprite("goodmob_1"),
                 k.area(),
                 k.pos(mob1.pos.x, mob1.pos.y),
@@ -147,7 +147,7 @@ const collisions = (game) => {
     spawnMobs();
     
 
-    game.add([
+    k.game.add([
         k.text(`HP: ${player_entity.hp()}`),
         k.pos(100,200),
         k.anchor("center"),
