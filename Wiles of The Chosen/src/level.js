@@ -1,6 +1,6 @@
 import k from "./kaboom.js";
 
-const level = () =>{
+const level = (game) =>{
     const GRAVITY_AMOUNT = 800;
     // const FLOOR_HEIGHT = 48;    
     
@@ -8,10 +8,12 @@ const level = () =>{
     k.setGravity(GRAVITY_AMOUNT);
     k.loadSprite("bgImage", "./src/Assets/testbackground.png");
     k.loadSprite("tiles", "./src/Assets/Tile_01.png");
+    k.loadSprite("empty", "./src/Assets/empty.png");
+    k.loadSprite("add_turrent", "./src/Assets/add_turrent.png");
 
-
-
-    const bgImage = add([
+  
+  
+    const bgImage = game.add([
         sprite("bgImage"),
         // Make the background centered on the screen
         pos(width() / 2, height() / 2),
@@ -40,11 +42,11 @@ k.addLevel([
     "               ",
     "               ",
     "               ",
-    "               ",
-    "               ",
-    "            =======          =====         ===    ",
-    "                                                  ",
-    "==================================================",
+    "                                                     ",
+    "*             +            +            +            ",
+    "*            ===          ===          ===          *",
+    "*                                                   *",
+    "====================================================*",
   ], {
     tileWidth: 31,
     tileHeight: 75,
@@ -54,14 +56,24 @@ k.addLevel([
             k.area(),
             k.body({isStatic: true})
         ], 
-    },
-
-    "*": () => [
-        k.sprite("empty"), // replace "empty" with an appropriate sprite or use an empty sprite // add k.solid() to make sure it's a solid tile
+        "*": () => [
+        k.sprite("empty"),
         k.area(),
-      ],
+        k.body({isStatic: true})
+       ],
+       "+": () => [
+        k.sprite("add_turrent"),
+        k.area(),
+        k.center(),
+        
 
-  })
+       ],
+       
+    }
+  } );
+    
+
+  
 
 }
 
