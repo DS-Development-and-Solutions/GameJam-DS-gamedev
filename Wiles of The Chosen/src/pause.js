@@ -16,7 +16,7 @@ function pause(game){
 			easings.easeOutElastic,
 		)
 		if (game.paused) {
-            game.pause;
+            game.paused = true;
 			pauseMenu.hidden = false
 			pauseMenu.paused = false
             
