@@ -7,6 +7,7 @@ const collisions = (game) => {
   const JUMP_FORCE = 300;
   const ORB_SPEED = 600;
   const MOBSPEED = 30;
+  const TOTEM_PRICE = 5;
   let MOB1_HP = 100;
   const FLOOR_HEIGHT = 48;
   let PLAYER_HP = 100;
@@ -14,10 +15,53 @@ const collisions = (game) => {
     let ORB_COUNT = 0;
     let KILL_COUNT = 0;
 
-    k.loadSprite("player", "./src/Assets/maincharacter/player.png");
-    k.loadSprite("orb", "./src/Assets/orb.png");
-    k.loadSprite("badmob_1", "./src/Assets/badmob.png");
-    k.loadSprite("goodmob_1", "./src/Assets/goodmob.png")
+    k.loadSprite("player", "./src/Assets/maincharacter/idle.png",{
+        sliceX:6,
+        sliceY:1,
+        anims: {
+            idle:{
+                from: 0,
+                to: 5,
+            }
+        }
+    });
+    k.loadSprite("orb", "./src/Assets/orb.png",{
+        sliceX:5,
+        sliceY:5,
+        anims:{
+            
+            shoot:{
+                from:0, 
+                to:6
+            },
+            explode:{
+                from:7, 
+                to:24
+            },
+        }
+    });
+    k.loadSprite("badmob_1", "./src/Assets/badmob_2.png",{
+        sliceX: 23,
+        sliceY: 5,
+        anims: {
+            run: {
+                from:40,
+                to: 45,
+            }
+        },
+    });
+    k.loadSprite("add_turrent", "./src/Assets/add_turrent.png");
+    k.loadSprite("goodmob_1", "./src/Assets/goodmob.png");
+    k.loadSprite("totem", "./src/Assets/totem.png",  {
+        sliceX: 2,
+        sliceY: 3,
+        anims: {
+            active: {
+                from: 0,
+                to: 3,
+            }
+        },
+    });
 
     const clock = k.add([
         k.text("08 AM"),
@@ -49,17 +93,7 @@ const collisions = (game) => {
 
         ]);
         
-        const losingText = game.add([
-            k.text(""),
-            k.area(),
-            k.anchor("center"),
-            k.pos(800, 400),
-          ]);
-    
-          function endGame(losingText) {
-            losingText.text = "The town is destroyed! Press enter to restart";
-            gameOver = true;
-          }
+       
 
 
      const player_entity = game.add([
@@ -71,30 +105,178 @@ const collisions = (game) => {
         
         
     ]);
+    
+    function createTotem_1(){
+        const totem = game.add([
+            {active: true},
+            k.sprite("totem"),
+            k.area(),
+            k.scale(1),
+            k.pos(1295, 450),
+            k.anchor("botright"),
+            "totem",
+        ]);
+return totem
+        }
+    
+        function createTotem_2(){
+            const totem = game.add([
+                {active: true},
+                k.sprite("totem"),
+                k.area(),
+                k.scale(1),
+                k.pos(895, 450),
+                k.anchor("botright"),
+                "totem",
+            ]);
+    return totem
+            }
+
+            function createTotem_3(){
+                const totem = game.add([
+                    {active: true},
+                    k.sprite("totem"),
+                    k.area(),
+                    k.scale(1),
+                    k.pos(490, 450),
+                    k.anchor("botright"),
+                    "totem",
+                ]);
+        return totem
+                }
+         
+       
+const add_turrent1 = game.add([
+    k.sprite("add_turrent"),
+    k.area(),
+    k.scale(0.5),
+    k.pos(463, 449),
+    k.anchor("botright"),
+    "add_turrent1",
+]);
+
+onClick("add_turrent1", () =>{
+    if(KILL_COUNT >=TOTEM_PRICE){
+    const totem1 = createTotem_3();
+    totem1_shoot(totem1);
+    destroy(add_turrent1);
+    KILL_COUNT-=TOTEM_PRICE;
+    }else {
+        game.add([
+            k.text(`You need ${TOTEM_PRICE-KILL_COUNT} more karma points to buy this totem`),
+            k.pos(366, 300),
+            k.lifespan(3),
+        ]);
+    }
+
+});
+
+const add_turrent2 = game.add([
+    k.sprite("add_turrent"),
+    k.area(),
+    k.scale(0.5),
+    k.pos(866, 449),
+    k.anchor("botright"),
+    "add_turrent2",
+]);
+
+onClick("add_turrent2", () =>{
+    if(KILL_COUNT >=TOTEM_PRICE){
+    const totem2 = createTotem_2();
+    totem1_shoot(totem2);
+    destroy(add_turrent2);
+    KILL_COUNT-=TOTEM_PRICE;
+    }else {
+        game.add([
+            k.text(`You need ${TOTEM_PRICE-KILL_COUNT} more karma points to buy this totem`),
+            k.pos(366, 300),
+            k.lifespan(3),
+        ]);
+    }
+});
+
+const add_turrent3 = game.add([
+    k.sprite("add_turrent"),
+    k.area(),
+    k.scale(0.5),
+    k.pos(1265, 449),
+    k.anchor("botright"),
+    "add_turrent3",
+]);
+
+onClick("add_turrent3", () =>{
+    if(KILL_COUNT >=TOTEM_PRICE){
+    const totem3 = createTotem_1();
+    totem1_shoot(totem3);
+    destroy(add_turrent3);
+    KILL_COUNT-=TOTEM_PRICE;
+    }else {
+        game.add([
+            k.text(`You need ${TOTEM_PRICE-KILL_COUNT} more karma points to buy this totem`),
+            k.pos(366, 300),
+            k.lifespan(3),
+        ]);
+    }
+
+});
+
+
+   
+
+   
+   const losingText = game.add([
+    k.text(""),
+    k.area(),
+    k.anchor("center"),
+    k.pos(800, 400),
+  ]);
+
+  function endGame(losingText) {
+    losingText.text = "The town is destroyed! Press enter to restart";
+    gameOver = true;
+  }
+
 
     function spawnOrb(pos) {
         
         const orb = game.add([
-            k.sprite("orb"),
+            k.sprite("orb" ,{animSpeed: 100}),
             k.area(),
            
             k.move(RIGHT, ORB_SPEED),
             k.offscreen({ destroy: true }),
-            k.scale(0.4),
-            k.pos(pos.x+35,pos.y+55),
+            k.scale(0.09),
+            k.pos(pos.x+75,pos.y+93),
             k.anchor("botright"),
             "orb",
         ]);
 
-     
+        k.wait(1.8, () => {
+            
+            k.destroy(orb);
+            
+            
+        });
+       orb.on("destroy", () => {
+        const deadorb = game.add([sprite("orb"), k.area(), k.scale(0.25), k.pos(orb.pos.x,orb.pos.y-20)]);
+            deadorb.play("explode",{speed: 45});
+            setTimeout(() => {
+                k.destroy(deadorb);
+            }, 1000);
+       
+       }
+       )
+      
+
 
         // Destroy the orb after 1 second
-        k.wait(1.8, () => {
-            k.destroy(orb);
-        });
+       
     }
 
+    setInterval(() => {
   
+        player_entity.play("idle");
+    }, 1000);
 
     k.onKeyPress("space", () => {
         if (player_entity.isGrounded()) {
@@ -102,7 +284,10 @@ const collisions = (game) => {
         }
     });
 
+
     k.onKeyDown("right", () => {
+   
+
         player_entity.move(SPEED, 0);
     });
 
@@ -115,7 +300,7 @@ const collisions = (game) => {
         if (canShoot) {
             spawnOrb(player_entity.pos);
             ORB_COUNT++;
-            console.log(ORB_COUNT);
+
     
             canShoot = false;
             setTimeout(() => {
@@ -154,19 +339,29 @@ const collisions = (game) => {
     function spawnMobs (){
          const mob1 = game.add([
             {speed: MOBSPEED},
+            
             k.sprite("badmob_1"),
-            k.area(),
-            k.pos(1500, 674),
+            k.area({scale: 0.44}),
+            k.pos(1500, 708),
             k.anchor("botleft"),
             k.move(LEFT, MOBSPEED),
             k.health(MOB1_HP),
+            k.scale(2),
+           
             
             "badmob_1",
         ]) 
 
-        
-        k.wait(rand(3, 10), spawnMobs)
-        
+        setInterval(() => {
+  
+            mob1.play("run");
+        }, 500);
+        k.wait(rand(3, 5), spawnMobs)
+
+    
+       
+       
+
 
         mob1.on("death", () => {
             k.shake(5); 
@@ -180,25 +375,65 @@ const collisions = (game) => {
                 "goodmob_1",
 
             ]);
-    
+            
             k.destroy(mob1)
+            KILL_COUNT++;
             
               
         });
-        
+        return mob1;
     }
     
     spawnMobs();
+ 
+    function totem1_shoot(totem){
+        
+            const orb_totem = game.add([
+                k.sprite("orb"),
+                k.area(),
+               
+                k.move((rand(600,1000),rand(390,420)), ORB_SPEED),
+   
+                k.scale(0.09),
+                k.pos(totem.pos),
+                k.anchor("botright"),
+                "orb",
+            ]);
+
+            totem.play("active");
+
+            setTimeout(() => {k.wait(k.rand(300, 3000), totem1_shoot(totem))}, 400); // 5000 milliseconds = 5 seconds
+
+            orb_totem.on("destroy", () => {
+                const deadorb = game.add([sprite("orb"), k.area(), k.scale(0.25), k.pos(orb_totem.pos.x,orb_totem.pos.y-20)]);
+                    deadorb.play("explode",{speed: 45});
+                    setTimeout(() => {
+                        k.destroy(deadorb);
+                    }, 1000);
+               
+               }
+               )
+            
+        }
+          
+        
     
 
     game.add([
         k.text(`HP: ${player_entity.hp()}`),
-        k.pos(100,200),
+        k.pos(90,200),
         k.anchor("center"),
         k.z(50),
         ({ update() { this.text = `HP: ${player_entity.hp()}` }}),
     ])
 
+    game.add([
+        k.text(`Karma Points: ${KILL_COUNT}`),
+        k.pos(170,100),
+        k.anchor("center"),
+        k.z(50),
+        ({ update() { this.text = `Karma Points: ${KILL_COUNT}` }}),
+    ])
 
     player_entity.onCollide("badmob_1", () => {
         player_entity.hurt(10)
@@ -211,16 +446,22 @@ const collisions = (game) => {
     });
 
     onCollide("orb", "badmob_1", (b, e) => {
+        k.shake(0.1);
 		e.hurt(ORB_DMG);
         destroy(b)
+
 		
 	})
 
     let gameOver = false;
     k.onKeyPress("enter", () => (gameOver ? Startgame() : null));
 
-    };
+    
+
+
   
+
+};
 
 
 export default collisions;
