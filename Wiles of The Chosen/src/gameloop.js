@@ -6,7 +6,9 @@ function Startgame (){
     scene("game", () => {
         const game = add([
         ]);
-    console.log(game);
+
+        
+    
     level(game);
     collisions(game);
     pause(game);
