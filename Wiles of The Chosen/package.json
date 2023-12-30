@@ -27,5 +27,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/DS-Development-and-Solutions/GameJam-DS-gamedev.git"
+},
+
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
 }
-}
+
+
