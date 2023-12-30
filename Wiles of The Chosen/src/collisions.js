@@ -1,6 +1,8 @@
 import k from "./kaboom.js";
 import Startgame from "./gameloop.js";
+import pause from "./pause.js";
 
+let currentDay = 1;
 
 const collisions = (game) => {
   const SPEED = 200;
@@ -74,7 +76,10 @@ const collisions = (game) => {
 
     
     } );
-}
+}   
+
+    let gameOver = false;
+    game.paused = false;
 
 
     const clock = k.add([
@@ -88,25 +93,43 @@ const collisions = (game) => {
           totalTime: 120,
           currentTime: 0,
           update() {
-            this.currentTime += k.dt();
-            if (this.currentTime >= this.totalTime) {
-              this.currentTime = 0;
-              this.hour = 8;
-              this.isAM = !this.isAM;
-            } else {
-              const percentage = this.currentTime / this.totalTime;
-              this.hour = Math.floor(8 + percentage * 16);
-              if (this.hour >= 24) {
-                this.hour -= 24;
+            if (!game.paused) {
+              this.currentTime += k.dt();
+              if (this.currentTime >= this.totalTime) {
+                this.currentTime = 0;
+                this.hour = 8;
+                this.isAM = !this.isAM;
+              } else {
+                const percentage = this.currentTime / this.totalTime;
+                this.hour = Math.floor(8 + percentage * 24);
+                if (this.hour >= 12) {
+                  this.isAM = false;
+                }
+                if (this.hour >= 24) {
+                  this.hour -= 24;
+                  this.isAM = true;
+                }
               }
-            } this.text = `${this.hour.toString().padStart(2, "0")}:00 ${
+              this.text = `${this.hour.toString().padStart(2, "0")}:00 ${
                 this.isAM ? "AM" : "PM"
               }`;
-            },
-          }, 
-
-        ]);
+    
+              if (this.hour === 2 && this.isAM && !game.paused) {
+                // gameOver = true;
+                endDay();
+              }
+            }
+          }
+        },
+      ]);
         
+      const days = k.add([
+        k.text(`Day ${currentDay}`),
+        k.area(),
+        k.anchor("center"),
+        k.pos(70, 60),
+      ]);
+
        
 
 
@@ -235,20 +258,53 @@ onClick("add_turrent3", () =>{
 });
 
 
-   
+   let winningText = null;
+
+  function endDay() {
+    game.paused = true;
+
+    if (!winningText) {
+      winningText = game.add([
+        k.text(""),
+        k.area(),
+        k.anchor("center"),
+        k.pos(800, 300),
+      ]);
+    }
+    
+    winningText.text = `You survived day ${currentDay}! Press Enter to start the next day`;
+  }
+
+  k.onKeyPress("enter", () => {
+    gameOver = true;
+    if (winningText) {
+      winningText.hidden = true;
+      currentDay += 1;
+      Startgame();
+    //   days.text = `Day ${currentDay}`;
+    }
+  });
+  
 
    
    const losingText = game.add([
     k.text(""),
     k.area(),
     k.anchor("center"),
-    k.pos(800, 400),
+    k.pos(800, 300),
   ]);
 
   function endGame(losingText) {
     losingText.text = "The town is destroyed! Press enter to restart";
     gameOver = true;
-  }
+    k.onKeyPress("enter", () => {
+        if(gameOver) {
+            currentDay = 1;
+            Startgame();
+         } else {
+            return null;
+         }
+    })}
 
 
     function spawnOrb(pos) {
@@ -469,8 +525,7 @@ onClick("add_turrent3", () =>{
 		
 	})
 
-    let gameOver = false;
-    k.onKeyPress("enter", () => (gameOver ? Startgame() : null));
+    // k.onKeyPress("enter", () => (gameOver ? Startgame() : null));
 
     
 
