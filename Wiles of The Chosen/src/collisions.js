@@ -14,6 +14,7 @@ const collisions = (game) => {
   let ORB_DMG = 8;
     let ORB_COUNT = 0;
     let KILL_COUNT = 0;
+    let IS_MUSIC_ON = false;
 
     k.loadSprite("player", "./src/Assets/maincharacter/idle.png",{
         sliceX:6,
@@ -52,6 +53,7 @@ const collisions = (game) => {
     });
     k.loadSprite("add_turrent", "./src/Assets/add_turrent.png");
     k.loadSprite("goodmob_1", "./src/Assets/goodmob.png");
+    k.loadSound("bgm", "./src/Assets/bgm.wav");
     k.loadSprite("totem", "./src/Assets/totem.png",  {
         sliceX: 2,
         sliceY: 3,
@@ -62,6 +64,18 @@ const collisions = (game) => {
             }
         },
     });
+
+    function music ()
+    {
+        IS_MUSIC_ON = true;
+        play("bgm", {
+        volume: 0.3,
+        loop: true,
+
+    
+    } );
+}
+
 
     const clock = k.add([
         k.text("08 AM"),
@@ -284,10 +298,12 @@ onClick("add_turrent3", () =>{
         }
     });
 
+    k.onKeyDown(() => {
+        if(!IS_MUSIC_ON) music();
+    });
 
     k.onKeyDown("right", () => {
-   
-
+        
         player_entity.move(SPEED, 0);
     });
 
